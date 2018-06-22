@@ -22,4 +22,15 @@ class Welcome extends CI_Controller {
 	{
 		$this->load->view('welcome_message');
 	}
+
+	public function gallery()
+	{
+		$this->load->view('gallery');
+	}
+
+	public function art($id)
+	{
+	    $data["id"] = $id;
+        $this->load->view('art', $data);
+	}
 }
