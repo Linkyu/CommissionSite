@@ -221,11 +221,18 @@ img {
     font-size: 1.5em;
     padding: 0.5em;
     border-radius: 2em;
-    box-shadow: 3px 3px rgba(254, 254, 100, 0.5) inset, -3px -3px rgba(1, 1, 1, 0.5) inset;
+    box-shadow: -3px -3px rgba(1, 1, 1, 0.5) inset, 3px 3px rgba(254, 254, 100, 0.5) inset;
 }
 
 #star_button:hover {
     cursor: pointer;
+    background-color: #f0855b;
+}
+
+#star_button:active {
+    cursor: pointer;
+    background-color: #ca4d0b;
+    box-shadow: -3px -3px rgba(254, 254, 100, 0.5) inset, 3px 3px rgba(1, 1, 1, 0.5) inset;
 }
 
 #art_data_div {

@@ -30,7 +30,12 @@ class Welcome extends CI_Controller {
 
 	public function art($id)
 	{
-	    $data["id"] = $id;
-        $this->load->view('art', $data);
+	    if (isset($id)) {
+            $data["id"] = $id;
+            $this->load->view('art', $data);
+        } else {
+            show_404();
+	        throw new InvalidArgumentException("id argument not found.");
+        }
 	}
 }
