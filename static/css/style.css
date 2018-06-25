@@ -190,6 +190,61 @@ img {
 
 }
 
+#art_full_img {
+    margin-bottom: 2em;
+}
+
+#art_full_img img {
+    max-width: 100%;
+}
+
+#art_details_div {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+#art_description_div, #art_data_div {
+    background: #e0f4ff url("../images/bg.png");
+    padding: 1em;
+    border: 3px solid;
+    border-image: linear-gradient(rgba(0, 51, 102, 0), rgba(8, 102, 154, 1)) 1 10%;
+
+    color: #08669A;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#star_button {
+    background-color: #DE6426;
+    text-align: center;
+    color: whitesmoke;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 1.5em;
+    padding: 0.5em;
+    border-radius: 2em;
+    box-shadow: 3px 3px rgba(254, 254, 100, 0.5) inset, -3px -3px rgba(1, 1, 1, 0.5) inset;
+}
+
+#star_button:hover {
+    cursor: pointer;
+}
+
+#art_data_div {
+    min-width: 10em;
+    margin-left: 2em;
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+.art_stat_label {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.art_stat_value {
+    text-align: right;
+    margin-top: 0;
+}
+
 footer {
     background-color: #08669A;
     color: whitesmoke;

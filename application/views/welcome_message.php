@@ -75,11 +75,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
     </div>
     <nav id="menu">
-        <a class="menu_tab">Main page</a>
-        <a class="menu_tab">Gallery</a>
-        <a class="menu_tab">Commission details</a>
-        <a class="menu_tab">Terms and conditions</a>
-        <a class="menu_tab">Contact</a>
+        <?php include "menu.php" ?>
     </nav>
 </div>
 <footer>

@@ -38,27 +38,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="main_galleries">
             <section class="gallery">
                 <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 15</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/fer1.png">
-                    </div>
-                    <p class="thumbnail_title">Feryuu ref sheet</p>
-                </div>
-                <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 7</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/kara.png">
-                    </div>
-                    <p class="thumbnail_title">"Kara Qureshi, ready to take off!"</p>
-                </div>
-                <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 95</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/aot.png">
-                    </div>
-                    <p class="thumbnail_title">Attack on Touhou</p>
-                </div>
-                <div class="thumbnail">
                     <p class="thumbnail_date">yesterday</p>
                     <div class="thumbnail_img_div">
                         <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/lyra.png">
@@ -79,15 +58,32 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <p class="thumbnail_title">Sketchavember day 27: Ult</p>
                 </div>
+                <div class="thumbnail">
+                    <p class="thumbnail_date">6 days ago</p>
+                    <div class="thumbnail_img_div">
+                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/fer1.png">
+                    </div>
+                    <p class="thumbnail_title">Feryuu ref sheet</p>
+                </div>
+                <div class="thumbnail">
+                    <p class="thumbnail_date">6 days ago</p>
+                    <div class="thumbnail_img_div">
+                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/kara.png">
+                    </div>
+                    <p class="thumbnail_title">"Kara Qureshi, ready to take off!"</p>
+                </div>
+                <div class="thumbnail">
+                    <p class="thumbnail_date">8 days ago</p>
+                    <div class="thumbnail_img_div">
+                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/aot.png">
+                    </div>
+                    <p class="thumbnail_title">Attack on Touhou</p>
+                </div>
             </section>
         </div>
     </div>
     <nav id="menu">
-        <a class="menu_tab">Main page</a>
-        <a class="menu_tab">Gallery</a>
-        <a class="menu_tab">Commission details</a>
-        <a class="menu_tab">Terms and conditions</a>
-        <a class="menu_tab">Contact</a>
+        <?php include "menu.php" ?>
     </nav>
 </div>
 <footer>
