@@ -38,4 +38,14 @@ class Welcome extends CI_Controller {
 	        throw new InvalidArgumentException("id argument not found.");
         }
 	}
+
+    public function terms()
+    {
+        $this->load->library('markdown');
+
+        $terms =  file_get_contents(base_url() . "static/files/terms.md");
+        $data["terms"] = $this->markdown->parse($terms);
+
+        $this->load->view('terms', $data);
+    }
 }
