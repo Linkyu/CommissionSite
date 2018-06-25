@@ -252,6 +252,43 @@ img {
     margin-top: 0;
 }
 
+#contact_form div{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-content: space-between;
+}
+
+#contact_form div label, #contact_form label{
+    width: 100%;
+    margin: 1em;
+    font-weight: bold;
+}
+
+#contact_form div label input, #contact_form label textarea {
+    display: block;
+    flex-grow: 1;
+    width: 100%;
+    min-height: 2em;
+}
+
+#contact_form label textarea {
+    min-height: 10em;
+}
+
+#contact_form input[type="submit"] {
+    text-align: right;
+    float: right;
+    height: 2em;
+    background-color: #08669A;
+    color: whitesmoke;
+    margin-top: 1em;
+}
+
+#contact_form input[type="submit"]::after {
+    clear:both;
+}
+
 footer {
     background-color: #08669A;
     color: whitesmoke;
