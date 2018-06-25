@@ -95,6 +95,15 @@ img {
     padding: 5px 1em;
     margin-bottom: 1em;
     font-family: "Lato", "proxima-nova", "Helvetica Neue", Arial, sans-serif;
+    text-decoration: none;
+}
+
+.menu_tab:hover {
+    background-color: #2688c1;
+}
+
+.menu_tab:active {
+    background-color: #005287;
 }
 
 #main_galleries {

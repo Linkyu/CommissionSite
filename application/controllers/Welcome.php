@@ -49,6 +49,16 @@ class Welcome extends CI_Controller {
         $this->load->view('terms', $data);
     }
 
+    public function about()
+    {
+        $this->load->library('markdown');
+
+        $about =  file_get_contents(base_url() . "static/files/about.md");
+        $data["about"] = $this->markdown->parse($about);
+
+        $this->load->view('about', $data);
+    }
+
     public function contact()
     {
         $this->load->view('contact');
