@@ -285,7 +285,7 @@ img {
     min-height: 10em;
 }
 
-#contact_form input[type="submit"] {
+#contact_form input[type="submit"], #upload_form input[type="submit"] {
     text-align: right;
     float: right;
     height: 2em;
@@ -294,8 +294,22 @@ img {
     margin-top: 1em;
 }
 
-#contact_form input[type="submit"]::after {
+#contact_form input[type="submit"]::after, #upload_form input[type="submit"]::after {
     clear:both;
+}
+
+#upload_inputs_div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-evenly;
+    align-content: space-between;
+}
+
+#upload_form div label input, #upload_form div label textarea {
+    display: block;
+    flex-grow: 1;
+    width: 100%;
+    min-height: 2em;
 }
 
 footer {
