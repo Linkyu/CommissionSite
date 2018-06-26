@@ -49,6 +49,16 @@ class Welcome extends CI_Controller {
         $this->load->view('terms', $data);
     }
 
+    public function commission_details()
+    {
+        $this->load->library('markdown');
+
+        $com_details =  file_get_contents(base_url() . "static/files/com_details.md");
+        $data["com_details"] = $this->markdown->parse($com_details);
+
+        $this->load->view('commission_details', $data);
+    }
+
     public function about()
     {
         $this->load->library('markdown');
