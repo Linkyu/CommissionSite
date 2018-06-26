@@ -56,9 +56,20 @@ class Admin extends CI_Controller {
         $this->load->view('admin/edit_contact', $data);
     }
 
-    public function edit_prices()
+    public function edit_prices($id = null)
     {
-        $data["prices"] = file_get_contents(base_url() . "static/files/prices.md");
+        if ($id == null) {
+            $data["edit"] = false;
+            $data["prices"] = array(
+                "sketch" => 15,
+                "lines" => 25,
+                "flats" => 35
+            );
+        } else {
+            $data["edit"] = true;
+            $data["type"] = "sketch";
+            $data["price"] = 15;
+        }
 
         $this->load->view('admin/edit_prices', $data);
     }
