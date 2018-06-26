@@ -41,4 +41,11 @@ class Admin extends CI_Controller {
         $data["price"] = "price";
         $this->load->view('admin/edit_art', $data);
     }
+
+    public function edit_terms()
+    {
+        $data["terms"] = file_get_contents(base_url() . "static/files/terms.md");
+
+        $this->load->view('admin/edit_terms', $data);
+    }
 }
