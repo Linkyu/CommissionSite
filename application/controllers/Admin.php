@@ -27,4 +27,18 @@ class Admin extends CI_Controller {
     {
         $this->load->view('admin/upload');
     }
+
+    public function edit_art()
+    {
+        $data["id"] = 135;
+        $data["title"] = "title";
+        $data["file"] = "file";
+        $data["description"] = "description";
+        $data["time_spent"] = "time_spent";
+        $data["software"] = "software";
+        $data["layers"] = "layers";
+        $data["is_commission"] = true == true ? 'checked="checked"' : '';
+        $data["price"] = "price";
+        $this->load->view('admin/edit_art', $data);
+    }
 }
