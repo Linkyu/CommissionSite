@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png"></div>
 
         <div id="body_container">
+            <h2>Upload art</h2>
 
             <form id="upload_form">
                 <div id="upload_inputs_div">
@@ -27,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input type="text">
                         </label>
                         <label>File
-                            <input type="file" onchange="previewFile()" id="upload_file_input">
+                            <input type="file" id="upload_file_input">
                         </label>
                         <label>Description
                             <textarea></textarea>
@@ -44,16 +45,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input type="text">
                         </label>
                         <label>Commission?
-                            <input type="checkbox">
+                            <input type="checkbox" id="upload_commission_checkbox">
                         </label>
-                        <label>Price
+                        <label id="upload_price_block">Price
                             <input type="text">
                         </label>
                     </div>
                     <div>
-                        <label>Thumbnail
-                            <img src="" height="200" id="thumbnail_maker" alt="Image preview...">
-                        </label>
+                        <label>Thumbnail</label>
+                        <div id="views"></div>
+                        <div id="preview"></div>
                     </div>
                 </div>
                 <input type="submit" value="Upload">
@@ -73,58 +74,172 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <script src="<?php echo base_url(); ?>static/js/jquery-3.3.1.js"></script>
 <script src="<?php echo base_url(); ?>static/js/jcrop/jquery.Jcrop.js"></script>
 <script src="<?php echo base_url(); ?>static/js/jcrop/jquery.color.js"></script>
+<!-- Jcrop and image previewer for making the thumbnail -->
 <script type="text/javascript">
-    function previewFile() {
-        var preview = document.querySelector('#thumbnail_maker');
-        var file    = document.querySelector('#upload_file_input').files[0];
-        var reader  = new FileReader();
+    var crop_max_width = 400;
+    var crop_max_height = 400;
+    var jcrop_api;
+    var canvas;
+    var context;
+    var image;
 
-        reader.onloadend = function () {
-            preview.src = reader.result;
-        };
+    var prefsize;
 
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = "";
+    $("#upload_file_input").change(function() {
+        loadImage(this);
+    });
+
+    function loadImage(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            canvas = null;
+            reader.onload = function(e) {
+                image = new Image();
+                image.onload = validateImage;
+                image.src = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
         }
-
-        create_jcrop();
     }
 
-    // The variable jcrop_api will hold a reference to the
-    // Jcrop API once Jcrop is instantiated.
-    var jcrop_api;
+    function dataURLtoBlob(dataURL) {
+        var BASE64_MARKER = ';base64,';
+        if (dataURL.indexOf(BASE64_MARKER) === -1) {
+            var parts = dataURL.split(',');
+            var contentType = parts[0].split(':')[1];
+            var raw = decodeURIComponent(parts[1]);
 
-    function create_jcrop() {
-        jQuery(function($){
-            $('#thumbnail_maker').Jcrop({
-                onRelease: releaseCheck
-            },function(){
-
-                jcrop_api = this;
-                jcrop_api.animateTo([100,100,400,300]);
-
-                // Setup and dipslay the interface for "enabled"
-                $('#can_click,#can_move,#can_size').attr('checked','checked');
-                $('#ar_lock,#size_lock,#bg_swap').attr('checked',false);
-                $('.requiresjcrop').show();
-
+            return new Blob([raw], {
+                type: contentType
             });
+        }
+        parts = dataURL.split(BASE64_MARKER);
+        contentType = parts[0].split(':')[1];
+        raw = window.atob(parts[1]);
+        var rawLength = raw.length;
+        var uInt8Array = new Uint8Array(rawLength);
+        for (var i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i);
+        }
+
+        return new Blob([uInt8Array], {
+            type: contentType
         });
     }
 
-    // This function is bound to the onRelease handler...
-    // In certain circumstances (such as if you set minSize
-    // and aspectRatio together), you can inadvertently lose
-    // the selection. This callback re-enables creating selections
-    // in such a case. Although the need to do this is based on a
-    // buggy behavior, it's recommended that you in some way trap
-    // the onRelease callback if you use allowSelect: false
-    function releaseCheck()
-    {
-        jcrop_api.setOptions({ allowSelect: true });
+    function validateImage() {
+        if (canvas != null) {
+            image = new Image();
+            image.onload = restartJcrop;
+            image.src = canvas.toDataURL('image/png');
+        } else restartJcrop();
     }
+
+    function restartJcrop() {
+        if (jcrop_api != null) {
+            jcrop_api.destroy();
+        }
+        var views = $("#views");
+        views.empty();
+        views.append("<canvas id=\"canvas\">");
+        canvas_global = $("#canvas");
+        canvas = canvas_global[0];
+        context = canvas.getContext("2d");
+        canvas.width = image.width;
+        canvas.height = image.height;
+        context.drawImage(image, 0, 0);
+        canvas_global.Jcrop({
+            onSelect: selectcanvas,
+            onRelease: clearcanvas,
+            boxWidth: crop_max_width,
+            boxHeight: crop_max_height
+        }, function() {
+            jcrop_api = this;
+        });
+        clearcanvas();
+    }
+
+    function showPreview(coords)
+    {
+        var rx = 100 / coords.w;
+        var ry = 100 / coords.h;
+
+        $('#preview').css({
+            width: Math.round(rx * 500) + 'px',
+            height: Math.round(ry * 370) + 'px',
+            marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+            marginTop: '-' + Math.round(ry * coords.y) + 'px'
+        });
+    }
+
+    function clearcanvas() {
+        prefsize = {
+            x: 0,
+            y: 0,
+            w: canvas.width,
+            h: canvas.height
+        };
+    }
+
+    function selectcanvas(coords) {
+        prefsize = {
+            x: Math.round(coords.x),
+            y: Math.round(coords.y),
+            w: Math.round(coords.w),
+            h: Math.round(coords.h)
+        };
+
+        showPreview(coords);
+    }
+
+    function applyCrop() {
+        canvas.width = prefsize.w;
+        canvas.height = prefsize.h;
+        context.drawImage(image, prefsize.x, prefsize.y, prefsize.w, prefsize.h, 0, 0, canvas.width, canvas.height);
+        validateImage();
+    }
+
+    $("#cropbutton").click(function(e) {
+        applyCrop();
+    });
+
+    $("#form").submit(function(e) {
+        e.preventDefault();
+        formData = new FormData($(this)[0]);
+        var blob = dataURLtoBlob(canvas.toDataURL('image/png'));
+        //---Add file blob to the form data
+        formData.append("cropped_image[]", blob);
+        $.ajax({
+            url: "whatever.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(data) {
+                alert("Success");
+            },
+            error: function(data) {
+                alert("Error");
+            },
+            complete: function(data) {}
+        });
+    });
+
+</script>
+<!-- hider -->
+<script type="text/javascript">
+    $("#upload_price_block").hide();
+
+    $(function () {
+        $("#upload_commission_checkbox").click(function () {
+            if ($(this).is(":checked")) {
+                $("#upload_price_block").show();
+            } else {
+                $("#upload_price_block").hide();
+            }
+        });
+    });
 </script>
 </body>
 </html>
