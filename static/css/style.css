@@ -106,6 +106,20 @@ img {
     background-color: #005287;
 }
 
+.special_menu_tab {
+    background-color: #DE6426;
+    color: whitesmoke;
+    text-shadow: 0 0 5px #DEC026;
+}
+
+.special_menu_tab:hover {
+    background-color: #ef804c;
+}
+
+.special_menu_tab:active {
+    background-color: #c8510b;
+}
+
 #main_galleries {
     clear: left;
 }

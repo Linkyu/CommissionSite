@@ -59,6 +59,11 @@ class Welcome extends CI_Controller {
         $this->load->view('commission_details', $data);
     }
 
+    public function commission_form()
+    {
+        $this->load->view('commission_form');
+    }
+
     public function about()
     {
         $this->load->library('markdown');
