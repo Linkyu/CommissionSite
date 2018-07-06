@@ -20,7 +20,12 @@ class Welcome extends CI_Controller {
 	 */
 	public function index()
 	{
-		$this->load->view('index');
+	    $this->load->model('Commission_site', 'data_model');
+
+	    $data['featured'] = $this->data_model->get_top_three_featured();
+	    $data['latest'] = $this->data_model->get_recent_art();
+
+		$this->load->view('index', $data);
 	}
 
 	public function gallery()

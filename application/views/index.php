@@ -25,52 +25,28 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="main_galleries">
             <h2 class="section_heading" id="featured_heading">⭐ Featured</h2>
             <section id="featured_section" class="mini_gallery">
+                <?php foreach ($featured as $art): ?>
                 <div class="thumbnail">
                     <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 15</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/fer1.png">
+                        <div class="thumbnail_star_counter">⭐ X <?php echo $art->star_count; ?></div>
+                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
                     </div>
-                    <p class="thumbnail_title">Feryuu ref sheet</p>
+                    <p class="thumbnail_title"><?php echo $art->title; ?></p>
                 </div>
-                <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 7</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/kara.png">
-                    </div>
-                    <p class="thumbnail_title">"Kara Qureshi, ready to take off!"</p>
-                </div>
-                <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X 95</div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/aot.png">
-                    </div>
-                    <p class="thumbnail_title">Attack on Touhou</p>
-                </div>
+                <?php endforeach; ?>
             </section>
 
             <h2 class="section_heading" id="latest_heading">🕑 Latest</h2>
             <section id="latest_section" class="mini_gallery">
+                <?php foreach ($latest as $art): ?>
                 <div class="thumbnail">
-                    <p class="thumbnail_date">yesterday</p>
+                    <p class="thumbnail_date"><?php echo $art->date; ?></p>
                     <div class="thumbnail_img_div">
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/lyra.png">
+                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
                     </div>
-                    <p class="thumbnail_title">Lyra scars ref</p>
+                    <p class="thumbnail_title"><?php echo $art->title; ?></p>
                 </div>
-                <div class="thumbnail">
-                    <p class="thumbnail_date">2 days ago</p>
-                    <div class="thumbnail_img_div">
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/kara2.png">
-                    </div>
-                    <p class="thumbnail_title">Underwater infiltration aaaaaaaaaaaaaaa  a aaa a a a a  a  a aaaa</p>
-                </div>
-                <div class="thumbnail">
-                    <p class="thumbnail_date">4 days ago</p>
-                    <div class="thumbnail_img_div">
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/fer2.png">
-                    </div>
-                    <p class="thumbnail_title">Sketchavember day 27: Ult</p>
-                </div>
+                <?php endforeach; ?>
             </section>
         </div>
     </div>
