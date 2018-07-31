@@ -26,26 +26,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <h2 class="section_heading" id="featured_heading">⭐ Featured</h2>
             <section id="featured_section" class="mini_gallery">
                 <?php foreach ($featured as $art): ?>
-                <div class="thumbnail">
-                    <div class="thumbnail_img_div">
-                        <div class="thumbnail_star_counter">⭐ X <?php echo $art->star_count; ?></div>
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
+                    <div class="thumbnail">
+                        <a href="<?php echo site_url('Main/art/' . $art->id) ?>">
+                            <div class="thumbnail_img_div">
+                                <div class="thumbnail_star_counter">⭐ X <?php echo $art->star_count; ?></div>
+                                <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
+                            </div>
+                            <p class="thumbnail_title"><?php echo $art->title; ?></p>
+                        </a>
                     </div>
-                    <p class="thumbnail_title"><?php echo $art->title; ?></p>
-                </div>
                 <?php endforeach; ?>
             </section>
 
             <h2 class="section_heading" id="latest_heading">🕑 Latest</h2>
             <section id="latest_section" class="mini_gallery">
                 <?php foreach ($latest as $art): ?>
-                <div class="thumbnail">
-                    <p class="thumbnail_date"><?php echo $art->date; ?></p>
-                    <div class="thumbnail_img_div">
-                        <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
+                    <div class="thumbnail">
+                        <a href="<?php echo site_url('Main/art/' . $art->id) ?>">
+                            <p class="thumbnail_date"><?php echo $art->date; ?></p>
+                            <div class="thumbnail_img_div">
+                                <img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename; ?>">
+                            </div>
+                            <p class="thumbnail_title"><?php echo $art->title; ?></p>
+                        </a>
                     </div>
-                    <p class="thumbnail_title"><?php echo $art->title; ?></p>
-                </div>
                 <?php endforeach; ?>
             </section>
         </div>

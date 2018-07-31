@@ -18,15 +18,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png"></div>
 
         <div id="body_container">
-            <h1>Title of the art<span id="title_art_id"> <?php echo $id ?></span></h1>
+            <h1><?php echo $art->title ?><span id="title_art_id"> <?php echo $art->id ?></span></h1>
 
-            <div id="art_full_img"><img src="<?php echo base_url(); ?>static/images/commissions.png"></div>
+            <div id="art_full_img"><img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename ?>"></div>
 
             <div id="art_details_div">
                 <div id="art_description_div">
-                    <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam id commodo nisi, ut ornare felis. Sed consectetur eros accumsan orci rhoncus consectetur. Duis nec velit hendrerit, tempor dolor non, rhoncus dolor. Proin sed lobortis ante. Suspendisse in est non lorem tincidunt elementum. Integer a ultrices nisi. Morbi ante nisl, rutrum quis dapibus tristique, consectetur ut sem. Donec eleifend a leo non porta.<br />
-                        Maecenas interdum nunc erat, at sagittis augue aliquam id. Nam ac lacus nisl. Nullam non tortor quam. Sed laoreet diam sed metus egestas dapibus ac et arcu. Mauris sem ligula, porta ut posuere eleifend, cursus sed mauris. Nulla facilisi. Morbi ultrices tincidunt dapibus. Suspendisse commodo aliquam tincidunt.</p></div>
+                    <p><?php echo $art->description ?></p></div>
                 <div id="art_data_div">
+                    <p class="center">⭐ X <?php echo $art->star_count ?></p>
                     <div id="art_stars_div"><div id="star_button">⭐ +1!</div></div>
                     <hr>
                     <div id="art_stats_div">

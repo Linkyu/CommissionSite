@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Main extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -28,15 +28,29 @@ class Welcome extends CI_Controller {
 		$this->load->view('index', $data);
 	}
 
-	public function gallery()
+	public function gallery($page = 0)
 	{
-		$this->load->view('gallery');
+        $this->load->model('Commission_site', 'data_model');
+        $thumbnails_per_page = 9;
+
+        if($page > 0) {
+            $offset = $page * $thumbnails_per_page;
+            $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page, $offset);
+        } else {
+            $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page);
+        }
+
+        $this->load->view('gallery', $data);
 	}
 
 	public function art($id)
 	{
 	    if (isset($id)) {
-            $data["id"] = $id;
+
+            $this->load->model('Commission_site', 'data_model');
+            $query = $this->data_model->get_art($id);
+            $data['art'] = reset($query);
+
             $this->load->view('art', $data);
         } else {
             show_404();

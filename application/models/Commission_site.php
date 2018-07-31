@@ -29,4 +29,14 @@ class Commission_site extends CI_Model
 
         return $query->result();
     }
+
+    public function get_art($id)
+    {
+        $this->load->database();
+
+        $this->db->where("id", $id);
+        $query = $this->db->get('art');
+
+        return $query->result();
+    }
 }

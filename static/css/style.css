@@ -165,6 +165,11 @@ img {
     align-content: space-between;
 }
 
+.thumbnail a {
+    text-decoration: none;
+    color: #08588d;
+}
+
 .thumbnail_date {
     text-align: right;
     font-style: italic;
@@ -219,6 +224,8 @@ img {
 
 #art_full_img img {
     max-width: 100%;
+    display: block;
+    margin: auto;
 }
 
 #art_details_div {
@@ -234,6 +241,10 @@ img {
 
     color: #08669A;
     font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#art_description_div {
+    flex-grow: 1;
 }
 
 #star_button {
@@ -329,5 +340,9 @@ img {
 footer {
     background-color: #08669A;
     color: whitesmoke;
+    text-align: center;
+}
+
+.center {
     text-align: center;
 }
