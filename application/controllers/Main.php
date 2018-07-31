@@ -34,11 +34,16 @@ class Main extends CI_Controller {
         $thumbnails_per_page = 9;
 
         if($page > 0) {
-            $offset = $page * $thumbnails_per_page;
+            $offset = ($page - 1) * $thumbnails_per_page;
             $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page, $offset);
+            $data["current_page"] = $page;
         } else {
             $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page);
+            $data["current_page"] = 1;
         }
+
+        $arts_total = $this->data_model->get_arts_total_amount();
+        $data["amount_of_pages"] = ceil($arts_total / $thumbnails_per_page);
 
         $this->load->view('gallery', $data);
 	}

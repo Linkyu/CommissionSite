@@ -39,4 +39,11 @@ class Commission_site extends CI_Model
 
         return $query->result();
     }
+
+    public function get_arts_total_amount()
+    {
+        $this->load->database();
+
+        return $this->db->count_all("art");
+    }
 }

@@ -218,6 +218,38 @@ img {
 
 }
 
+.pagination_div {
+    text-align: center;
+}
+
+.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 8px 0;
+}
+
+.pagination li {
+    display: inline;
+}
+
+.pagination li a {
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #08588d;
+    border: 1px solid #ddd;
+    transition: background-color .3s;
+}
+
+.pagination a.active {
+    background-color: #08669A;
+    color: white;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
+}
+
 #art_full_img {
     margin-bottom: 2em;
 }
