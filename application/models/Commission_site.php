@@ -19,12 +19,32 @@ class Commission_site extends CI_Model
         return $query->result();
     }
 
-    public function get_recent_art($limit = 3, $offset = 0, $custom_query = null)
+    public function get_recent_art(int $limit = 3, int $offset = 0, array $search_query = null)
     {
         $this->load->database();
 
         $this->db->order_by("date", 'DESC');
         $this->db->limit($limit, $offset);
+
+        if ($search_query != null) {
+            $search_string = $search_query["query"];
+            if (isset($search_query["tags"]))
+            {
+                $tags = implode (",", $search_query["tags"]);
+            } else {
+                $tags = "";
+            }
+
+            $this->db->join('art_tag', 'art_tag.art = art.id', 'left');
+            $this->db->where("(title like '%{$search_string}%' or description like '%{$search_string}%')");
+
+            if ($tags != "") {
+                $this->db->where("tag in ({$tags})");
+            }
+
+            $this->db->group_by('art');
+        }
+
         $query = $this->db->get('art');
 
         return $query->result();

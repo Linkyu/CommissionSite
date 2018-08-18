@@ -63,6 +63,8 @@ class Main extends CI_Controller {
         $arts_total = $this->data_model->get_arts_total_amount();
         $data["amount_of_pages"] = ceil($arts_total / $thumbnails_per_page);
 
+        $data['path'] = "gallery";
+
         $this->load->view('gallery', $data);
 	}
 
@@ -74,14 +76,35 @@ class Main extends CI_Controller {
         $this->form_validation->set_rules('query', 'Query', 'htmlspecialchars|trim');
         $this->form_validation->set_rules('tags', 'Tags', 'htmlspecialchars|trim');
 
+        $this->load->model('Commission_site', 'data_model');
+
         if ($this->form_validation->run() == FALSE)
         {
             echo "noo";
         }
         else
         {
-            echo "yes";
-            var_dump($this->input->post());
+            $thumbnails_per_page = 9;
+
+            // Get the thumbnails
+            if($page > 0) {
+                $offset = ($page - 1) * $thumbnails_per_page;
+                $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page, $offset, $this->input->post());
+                $data["current_page"] = $page;
+            } else {
+                $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page, 0, $this->input->post());
+                $data["current_page"] = 1;
+            }
+
+            // Get the tags
+            $data['tag_categories'] = $this->data_model->get_tags();
+
+            $arts_total = $this->data_model->get_arts_total_amount();
+            $data["amount_of_pages"] = ceil($arts_total / $thumbnails_per_page);
+
+            $data['path'] = "search";
+
+            $this->load->view('gallery', $data);
         }
     }
 

@@ -55,15 +55,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="pagination_div">
                 <ul class="pagination">
                     <?php if ($current_page > 1): ?>
-                    <li><a href="<?php echo site_url('Main/gallery/' . ($current_page - 1)) ?>">«</a></li>
+                    <li><a href="<?php echo site_url('Main/' . $path . '/' . ($current_page - 1)) ?>">«</a></li>
                     <?php endif; ?>
 
                     <?php for($i = 1; $i <= $amount_of_pages; ++$i): ?>
-                    <li><a <?php if($i == $current_page){echo ' class="active"';}?> href="<?php echo site_url('Main/gallery/' . $i) ?>"><?php echo $i; ?></a></li>
+                    <li><a <?php if($i == $current_page){echo ' class="active"';}?> href="<?php echo site_url('Main/' . $path . '/' . $i) ?>"><?php echo $i; ?></a></li>
                     <?php endfor; ?>
 
                     <?php if ($current_page < $amount_of_pages): ?>
-                    <li><a href="<?php echo site_url('Main/gallery/' . ($current_page + 1)) ?>">»</a></li>
+                    <li><a href="<?php echo site_url('Main/' . $path . '/' . ($current_page + 1)) ?>">»</a></li>
                     <?php endif; ?>
                 </ul>
             </div>
