@@ -21,19 +21,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         <p id="introduction">Welcome to the gallery. You can filter and search.</p>
 
-        <form id="gallery_search_form">
-            <input type="search" placeholder="Search..." id="gallery_search_bar"/>
+        <?php echo validation_errors(); ?>
+
+        <?php echo form_open('main/search', 'id = "gallery_search_form"'); ?>
+            <input type="search" placeholder="Search..." id="gallery_search_bar" name="query"/>
             <select multiple data-placeholder="Select which tags to include" id="gallery_tag_selector"
-                    class="chosen-choices" title="AAA">
-                <option value="sketch">Sketch</option>
-                <option value="kara_qureshi">Kara Qureshi</option>
-                <option value="krita">Krita</option>
-                <option value="furries">Furries</option>
-                <option value="3d">3D</option>
-                <option value="guns">Guns</option>
+                    class="chosen-choices" title="Tags" name="tags[]">
+                <?php foreach ($tag_categories as $category => $tags): ?>
+                    <optgroup label="<?php echo $category ?>">
+                        <?php foreach ($tags as $tag): ?>
+                            <option value="<?php echo $tag["id"] ?>"><?php echo $tag["tag"] ?></option>
+                        <?php endforeach; ?>
+                    </optgroup>
+                <?php endforeach; ?>
             </select>
             <input type="submit" value="> Search">
-        </form>
+        <?php echo form_close(); ?>
 
         <div id="main_galleries">
             <section class="gallery">

@@ -30,9 +30,13 @@ class Main extends CI_Controller {
 
 	public function gallery($page = 0)
 	{
+	    $this->load->helper('form');
+        $this->load->library('form_validation');
+
         $this->load->model('Commission_site', 'data_model');
         $thumbnails_per_page = 9;
 
+        // Get the thumbnails
         if($page > 0) {
             $offset = ($page - 1) * $thumbnails_per_page;
             $data['arts'] = $this->data_model->get_recent_art($thumbnails_per_page, $offset);
@@ -42,11 +46,44 @@ class Main extends CI_Controller {
             $data["current_page"] = 1;
         }
 
+        // Get the tags
+        $data['tag_categories'] = $this->data_model->get_tags();
+//        array (
+//          'tag category' =>
+//            array (
+//                0 => array (
+//                  'id' => string '4'
+//                  'tag' => string 'furries')
+//                1 => array (
+//                  'id' => string '6'
+//                  'tag' => string 'guns')
+//                N => ... ),
+//          'more categories' => ... )
+
         $arts_total = $this->data_model->get_arts_total_amount();
         $data["amount_of_pages"] = ceil($arts_total / $thumbnails_per_page);
 
         $this->load->view('gallery', $data);
 	}
+
+	public function search($page = 0)
+    {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('query', 'Query', 'htmlspecialchars|trim');
+        $this->form_validation->set_rules('tags', 'Tags', 'htmlspecialchars|trim');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+            echo "noo";
+        }
+        else
+        {
+            echo "yes";
+            var_dump($this->input->post());
+        }
+    }
 
 	public function art($id)
 	{

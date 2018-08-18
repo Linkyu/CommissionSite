@@ -19,7 +19,7 @@ class Commission_site extends CI_Model
         return $query->result();
     }
 
-    public function get_recent_art($limit = 3, $offset = 0)
+    public function get_recent_art($limit = 3, $offset = 0, $custom_query = null)
     {
         $this->load->database();
 
@@ -45,5 +45,24 @@ class Commission_site extends CI_Model
         $this->load->database();
 
         return $this->db->count_all("art");
+    }
+
+    public function get_tags()
+    {
+        $this->load->database();
+
+        $query = $this->db->query("SELECT tag.id as id, tag.name as tag, tag_category.name as category from tag LEFT JOIN tag_category ON tag_category.id = tag.category ORDER BY tag_category.name");
+        $tags = $query->result();
+        $dict = array();
+
+        foreach ($tags as $element) {
+            if (array_key_exists($element->category, $dict)) {
+                array_push($dict[$element->category], array("id" => $element->id, "tag" => $element->tag));
+            } else {
+                $dict[$element->category] = array(array("id" => $element->id, "tag" => $element->tag));
+            }
+        }
+
+        return $dict;
     }
 }
