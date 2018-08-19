@@ -162,6 +162,29 @@ class Main extends CI_Controller {
 
     public function contact()
     {
-        $this->load->view('contact');
+        $this->load->helper('form');
+
+        if ($this->input->method() == "get")
+        {
+            $this->load->view('contact');
+        }
+        else
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('name', 'Name', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('email', 'Email', 'htmlspecialchars|trim|required|valid_email');
+            $this->form_validation->set_rules('message', 'Message', 'htmlspecialchars|trim|required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $this->load->view('contact', $this->input->post());
+            }
+            else
+            {
+                $data["sent_flag"] = true;
+                $this->load->view('contact', $data);
+            }
+        }
     }
 }

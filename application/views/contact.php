@@ -18,20 +18,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png"></div>
 
         <div id="body_container">
-            <form id="contact_form">
+            <div id="error_div">
+                <?php echo validation_errors(); ?>
+            </div>
+            <?php if (isset($sent_flag)): ?>
+            <p id="info_div">Thank you! Your message has been sent successfully!</p>
+            <?php endif; ?>
+
+            <?php echo form_open('main/contact', 'id = "contact_form"'); ?>
                 <div>
                     <label>Name
-                        <input type="text">
+                        <input type="text" name="name" value="<?php if (isset($name)) {echo $name;} ?>">
                     </label>
                     <label>Email
-                        <input type="email">
+                        <input type="email" name="email" value="<?php if (isset($email)) {echo $email;} ?>">
                     </label>
                 </div>
                 <label>Message
-                    <textarea></textarea>
+                    <textarea name="message"><?php if (isset($message)) {echo $message;} ?></textarea>
                 </label>
-                <input type="submit">
-            </form>
+                <input type="submit" value="Send!">
+            <?php echo form_close(); ?>
         </div>
 
     </div>
