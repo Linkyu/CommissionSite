@@ -85,4 +85,23 @@ class Commission_site extends CI_Model
 
         return $dict;
     }
+
+    public function get_stats(int $art_id)
+    {
+        $this->load->database();
+
+//        select stats.name, art_stat.value
+//        from art_stat
+//        left join art on art.id = art_stat.art
+//        left join stats on stats.id = art_stat.stat
+//        where art = $art_id
+        $this->db->select("stats.name, art_stat.value");
+        $this->db->join("art", "art.id = art_stat.art", "left");
+        $this->db->join("stats", "stats.id = art_stat.stat", "left");
+        $this->db->where("art", $art_id);
+
+        $query = $this->db->get("art_stat");
+
+        return $query->result();
+    }
 }

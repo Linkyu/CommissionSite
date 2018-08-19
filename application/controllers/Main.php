@@ -116,6 +116,8 @@ class Main extends CI_Controller {
             $query = $this->data_model->get_art($id);
             $data['art'] = reset($query);
 
+            $data['stats'] = $this->data_model->get_stats($id);
+
             $this->load->view('art', $data);
         } else {
             show_404();

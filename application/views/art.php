@@ -24,18 +24,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <div id="art_details_div">
                 <div id="art_description_div">
-                    <p><?php echo $art->description ?></p></div>
+                    <p><?php echo $art->description ?></p>
+                    <?php if ($art->is_commission): ?>
+                        <hr/>
+                        <p>This work was commissioned for $<?php echo $art->price ?>.</p>
+                    <?php endif; ?>
+                </div>
                 <div id="art_data_div">
                     <p class="center">⭐ X <?php echo $art->star_count ?></p>
                     <div id="art_stars_div"><div id="star_button">⭐ +1!</div></div>
                     <hr>
                     <div id="art_stats_div">
-                        <p class="art_stat_label">Time spent</p>
-                        <p class="art_stat_value">about 3 hours</p>
-                        <p class="art_stat_label">Software</p>
-                        <p class="art_stat_value">Krita</p>
-                        <p class="art_stat_label">Layers</p>
-                        <p class="art_stat_value">3</p>
+                        <?php foreach ($stats as $stat): ?>
+                        <p class="art_stat_label"><?php echo $stat->name ?></p>
+                        <p class="art_stat_value"><?php echo $stat->value ?></p>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
