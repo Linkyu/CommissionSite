@@ -28,7 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <p id="info_div">Thank you! Your commission request has been sent successfully!</p>
             <?php endif; ?>
 
-            <?php echo form_open('main/contact', 'id = "commission_form"'); ?>
+            <?php echo form_open('main/commission_form', 'id = "commission_form"'); ?>
                 <div id="no">
                     <div class="flex_div">
                         <label><h3>Category</h3>
@@ -58,10 +58,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </label>
                     </div>
                     <label><h3>Description</h3>
-                        <textarea name="description"><?php if (isset($message)) {echo $message;} else {echo "Please include references";} ?></textarea>
+                        <textarea name="description" placeholder="Please include references"><?php if (isset($description)) {echo $description;} ?></textarea>
                     </label>
                     <input type="checkbox" id="terms_agreed_checkbox" name="terms_agreed">
-                    <label for="terms_agreed_checkbox">By checking this box, I agree to the <a href="<?php echo site_url('Main/terms') ?>">terms and conditions</a></label>
+                    <label for="terms_agreed_checkbox">By checking this box, I agree to the <a href="<?php echo site_url('Main/terms') ?>" target="_blank">terms and conditions</a></label>
                 </div>
                 <input type="submit" value="Send commission details!">
             <?php echo form_close(); ?>

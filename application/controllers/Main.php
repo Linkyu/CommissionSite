@@ -148,7 +148,47 @@ class Main extends CI_Controller {
     public function commission_form()
     {
         $this->load->helper('form');
-        $this->load->view('commission_form');
+        if ($this->input->method() == "get")
+        {
+            $this->load->view('commission_form');
+        }
+        else
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('category', 'Category', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('scope', 'Scope', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('name', 'Name', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('email', 'Email', 'htmlspecialchars|trim|required|valid_email');
+            $this->form_validation->set_rules('description', 'Description', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('terms_agreed', 'TOS agreement', 'callback_check_tos_agreement');
+
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $this->load->view('commission_form', $this->input->post());
+            }
+            else if($this->input->post("terms_agreed") == FALSE)
+            {
+                $this->load->view('commission_form', $this->input->post());
+            }
+            else
+            {
+                $this->send_commission_email($this->input->post());
+                $data["sent_flag"] = true;
+                $this->load->view('commission_form', $data);
+            }
+        }
+    }
+
+    function check_tos_agreement($is_checked)
+    {
+	    if ($is_checked == 'on') {
+	        return true;
+        }
+
+        $this->form_validation->set_message('check_tos_agreement', 'Please read and accept the terms and conditions.');
+        return false;
     }
 
     public function about()
@@ -199,6 +239,22 @@ class Main extends CI_Controller {
 
         $this->email->subject('Contact email from linkyu.art');
         $this->email->message($data["message"]);
+
+        $this->email->send();
+    }
+
+    private function send_commission_email($data)
+    {
+        $this->load->library('email');
+
+        $this->email->from($data["email"], $data["name"]);
+        $this->email->to('linkyu.work@gmail.com');
+
+        $this->email->subject('Commission request from ' . $data["name"]);
+        $this->email->message(
+            "Category: " . $data["category"] .
+            "\nScope: " . $data["scope"] .
+            "\n\nDescription: \n" . $data["description"]);
 
         $this->email->send();
     }
