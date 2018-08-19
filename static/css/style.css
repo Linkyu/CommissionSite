@@ -318,31 +318,31 @@ img {
     margin-top: 0;
 }
 
-#contact_form div{
+#contact_form div, #commission_form .flex_div{
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-evenly;
     align-content: space-between;
 }
 
-#contact_form div label, #contact_form label{
+#contact_form div label, #contact_form label, #commission_form div label, #commission_form label{
     width: 100%;
     margin: 1em;
     font-weight: bold;
 }
 
-#contact_form div label input, #contact_form label textarea {
+#contact_form div label input, #contact_form label textarea, #commission_form div label input, #commission_form label textarea {
     display: block;
     flex-grow: 1;
     width: 100%;
     min-height: 2em;
 }
 
-#contact_form label textarea {
+#contact_form label textarea, #commission_form label textarea {
     min-height: 10em;
 }
 
-#contact_form input[type="submit"], #upload_form input[type="submit"] {
+#contact_form input[type="submit"], #upload_form input[type="submit"], #commission_form input[type="submit"] {
     text-align: right;
     float: right;
     height: 2em;
@@ -351,7 +351,7 @@ img {
     margin-top: 1em;
 }
 
-#contact_form input[type="submit"]::after, #upload_form input[type="submit"]::after {
+#contact_form input[type="submit"]::after, #upload_form input[type="submit"]::after, #commission_form input[type="submit"]::after {
     clear:both;
 }
 

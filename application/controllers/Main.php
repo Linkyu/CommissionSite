@@ -147,6 +147,7 @@ class Main extends CI_Controller {
 
     public function commission_form()
     {
+        $this->load->helper('form');
         $this->load->view('commission_form');
     }
 
