@@ -182,9 +182,23 @@ class Main extends CI_Controller {
             }
             else
             {
+                $this->send_contact_email($this->input->post());
                 $data["sent_flag"] = true;
                 $this->load->view('contact', $data);
             }
         }
+    }
+
+    private function send_contact_email($data)
+    {
+        $this->load->library('email');
+
+        $this->email->from($data["email"], $data["name"]);
+        $this->email->to('linkyu.work@gmail.com');
+
+        $this->email->subject('Contact email from linkyu.art');
+        $this->email->message($data["message"]);
+
+        $this->email->send();
     }
 }
