@@ -118,12 +118,61 @@ class Main extends CI_Controller {
 
             $data['stats'] = $this->data_model->get_stats($id);
 
+            $data['ip'] = $this->input->ip_address();
+
             $this->load->view('art', $data);
         } else {
             show_404();
 	        throw new InvalidArgumentException("id argument not found.");
         }
 	}
+
+	public function star()
+    {
+        if ($this->input->method() == "get")
+        {
+            show_error("Bad method!", 400);
+        }
+        else
+        {
+            $this->load->model('Commission_site', 'data_model');
+
+            // ////////////////////////////////
+            // TODO: REMOVE THIS IN PRODUCTION
+            header('Access-Control-Allow-Origin: *');
+            header('Access-Control-Allow-Methods: GET, POST');
+            header("Access-Control-Allow-Headers: X-Requested-With");
+            // ////////////////////////////////
+
+            $ip = htmlspecialchars($this->input->post("ip"));
+            $art_id = htmlspecialchars($this->input->post("art_id"));
+
+            if ($this->data_model->has_starred($art_id, $ip)) {
+                show_error("Already starred", 403);
+            } else {
+                $star_result = $this->data_model->star($art_id, $ip);
+
+                if ($star_result == "OK") {
+                    echo "Starred!";
+                } else {
+                    show_error("Uh something went wrong.", 501);
+                }
+            }
+        }
+    }
+
+    public function get_star_counter($id)
+    {
+        $this->load->model('Commission_site', 'data_model');
+
+        // ////////////////////////////////
+        // TODO: REMOVE THIS IN PRODUCTION
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST');
+        header("Access-Control-Allow-Headers: X-Requested-With");
+        // ////////////////////////////////
+        echo $this->data_model->get_star_counter($id);
+    }
 
     public function terms()
     {

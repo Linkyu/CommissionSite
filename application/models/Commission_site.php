@@ -60,6 +60,33 @@ class Commission_site extends CI_Model
         return $query->result();
     }
 
+    public function get_star_counter($id)
+    {
+        $this->load->database();
+
+        $this->db->select("star_count");
+        $this->db->where("id", $id);
+        $query = $this->db->get('art');
+        $result = $query->result();
+        return $result[0]->star_count;
+    }
+
+    public function star($id, $ip)
+    {
+        $this->load->database();
+
+        $this->db->set("star_count", "star_count+1", FALSE);
+        $this->db->where("id", $id);
+        $this->db->update("art");
+
+        $this->db->set("art", $id);
+        $this->db->set("ip", $ip);
+        $this->db->set("date", date('Y/m/d:h-m-s'));
+        $this->db->insert("has_starred");
+
+        return "OK";
+    }
+
     public function get_arts_total_amount()
     {
         $this->load->database();
@@ -103,5 +130,16 @@ class Commission_site extends CI_Model
         $query = $this->db->get("art_stat");
 
         return $query->result();
+    }
+
+    public function has_starred(int $art_id, string $ip)
+    {
+        $this->load->database();
+
+        $this->db->where("ip", $ip);
+        $this->db->where("art", $art_id);
+        $query = $this->db->get("has_starred");
+
+        return sizeof($query->result()) == 1;
     }
 }

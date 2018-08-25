@@ -31,7 +31,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <?php endif; ?>
                 </div>
                 <div id="art_data_div">
-                    <p class="center">⭐ X <?php echo $art->star_count ?></p>
+                    <p class="center">⭐ X <span id="star_counter_number"><?php echo $art->star_count ?></span></p>
                     <div id="art_stars_div"><div id="star_button">⭐ +1!</div></div>
                     <hr>
                     <div id="art_stats_div">
@@ -49,9 +49,39 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </nav>
 </div>
 <footer>
-    <p class="footer">Page rendered in <strong>{elapsed_time}</strong>
-        seconds. <?php echo (ENVIRONMENT === 'development') ? 'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?>
-    </p>
+    <p class="footer">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</p>
 </footer>
+<script src="<?php echo base_url(); ?>static/js/jquery-3.3.1.js"></script>
+<script type="text/javascript">
+    $("#star_button").click(function(){
+        $.ajax({
+            url: "<?php echo site_url('Main/star') ?>",
+            type: "POST",
+            data: {
+                ip: "<?php echo $ip ?>",
+                art_id: <?php echo $art->id ?>
+            },
+            datatype: "json",
+            success: function(result){
+                update_star_counter();
+            },
+            error: function (message) {
+                alert("You have already voted-- But thanks anyway!")
+            }
+        });
+    });
+
+    function update_star_counter() {
+        $.ajax({
+            url: "<?php echo site_url('Main/get_star_counter/' . $art->id) ?>",
+            success: function (result) {
+                $("#star_counter_number").text(result);
+            },
+            error: function (message) {
+                alert(message);
+            }
+        })
+    }
+</script>
 </body>
 </html>
