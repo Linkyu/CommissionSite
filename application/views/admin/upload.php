@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
     <link rel="shortcut icon" href="<?php echo base_url(); ?>static/images/icon.png">
     <link rel="stylesheet" href="<?php echo base_url(); ?>static/css/style.css">
-    <link rel="stylesheet" href="<?php echo base_url(); ?>static/css/jcrop/jquery.Jcrop.css" type="text/css" />
+    <link rel="stylesheet" href="<?php echo base_url(); ?>static/css/cropper/cropper.css" type="text/css" />
 </head>
 <body>
 <header>
@@ -19,46 +19,50 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png"></div>
 
         <div id="body_container">
+            <div id="error_div">
+                <?php echo validation_errors(); ?>
+            </div>
+
             <h2>Upload art</h2>
 
-            <form id="upload_form">
+            <?php echo form_open_multipart('admin/upload', 'id = "upload_form"'); ?>
                 <div id="upload_inputs_div">
                     <div>
                         <label>Title
-                            <input type="text">
+                            <input type="text" name="title">
                         </label>
                         <label>File
-                            <input type="file" id="upload_file_input">
+                            <input type="file" id="upload_file_input" name="upload_file_input">
                         </label>
                         <label>Description
-                            <textarea></textarea>
+                            <textarea name="description"></textarea>
                         </label>
                         <br>
                         <h2>Stats:</h2>
-                        <label>Time spent
-                            <input type="text">
-                        </label>
-                        <label>Software
-                            <input type="text">
-                        </label>
-                        <label>Amount of layers
-                            <input type="text">
-                        </label>
+
+                        <?php foreach ($stats as $stat): ?>
+                            <label><?php echo $stat->name ?>
+                                <input type="text" name="<?php echo strtolower(str_replace(' ', '_', $stat->name)) ?>">
+                            </label>
+                        <?php endforeach; ?>
+
                         <label>Commission?
-                            <input type="checkbox" id="upload_commission_checkbox">
+                            <input type="checkbox" id="upload_commission_checkbox" name="upload_commission_checkbox">
                         </label>
                         <label id="upload_price_block">Price
-                            <input type="text">
+                            <input type="text" name="price">
                         </label>
                     </div>
                     <div>
                         <label>Thumbnail</label>
-                        <div id="views"></div>
+                        <div id="view">
+                            <img id="canvas" src="#" alt="preview" />
+                        </div>
                         <div id="preview"></div>
                     </div>
                 </div>
                 <input type="submit" value="Upload">
-            </form>
+            <?php echo form_close(); ?>
         </div>
 
     </div>
@@ -72,159 +76,79 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </p>
 </footer>
 <script src="<?php echo base_url(); ?>static/js/jquery-3.3.1.js"></script>
-<script src="<?php echo base_url(); ?>static/js/jcrop/jquery.Jcrop.js"></script>
-<script src="<?php echo base_url(); ?>static/js/jcrop/jquery.color.js"></script>
+<script src="<?php echo base_url(); ?>static/js/jquery-cropper/cropper.js"></script>
+<script src="<?php echo base_url(); ?>static/js/jquery-cropper/jquery-cropper.js"></script>
+
 <!-- Jcrop and image previewer for making the thumbnail -->
 <script type="text/javascript">
-    var crop_max_width = 400;
-    var crop_max_height = 400;
-    var jcrop_api;
-    var canvas;
-    var context;
-    var image;
+    var cropper;
+    var canvas_global = $('#canvas');
 
-    var prefsize;
+    function readURL(input) {
 
-    $("#upload_file_input").change(function() {
-        loadImage(this);
-    });
-
-    function loadImage(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-            canvas = null;
+
             reader.onload = function(e) {
-                image = new Image();
-                image.onload = validateImage;
-                image.src = e.target.result;
+                canvas_global.attr('src', e.target.result);
+                startCropper();
             };
+
             reader.readAsDataURL(input.files[0]);
         }
     }
 
-    function dataURLtoBlob(dataURL) {
-        var BASE64_MARKER = ';base64,';
-        if (dataURL.indexOf(BASE64_MARKER) === -1) {
-            var parts = dataURL.split(',');
-            var contentType = parts[0].split(':')[1];
-            var raw = decodeURIComponent(parts[1]);
+    function startCropper() {
 
-            return new Blob([raw], {
-                type: contentType
-            });
-        }
-        parts = dataURL.split(BASE64_MARKER);
-        contentType = parts[0].split(':')[1];
-        raw = window.atob(parts[1]);
-        var rawLength = raw.length;
-        var uInt8Array = new Uint8Array(rawLength);
-        for (var i = 0; i < rawLength; ++i) {
-            uInt8Array[i] = raw.charCodeAt(i);
-        }
+        // CROPPER
 
-        return new Blob([uInt8Array], {
-            type: contentType
+        canvas_global.cropper({
+            aspectRatio: 1,
+            zoomable: false,
+            minCropBoxWidth: 256,
+            minCropBoxHeight: 256,
+            crop: function(event) {
+                console.log(event.detail.x);
+                console.log(event.detail.y);
+                console.log(event.detail.width);
+                console.log(event.detail.height);
+                console.log(event.detail.rotate);
+                console.log(event.detail.scaleX);
+                console.log(event.detail.scaleY);
+            }
         });
+
+        // Get the Cropper.js instance after initialized
+        cropper = canvas_global.data('cropper');
     }
 
-    function validateImage() {
-        if (canvas != null) {
-            image = new Image();
-            image.onload = restartJcrop;
-            image.src = canvas.toDataURL('image/png');
-        } else restartJcrop();
-    }
-
-    function restartJcrop() {
-        if (jcrop_api != null) {
-            jcrop_api.destroy();
-        }
-        var views = $("#views");
-        views.empty();
-        views.append("<canvas id=\"canvas\">");
-        canvas_global = $("#canvas");
-        canvas = canvas_global[0];
-        context = canvas.getContext("2d");
-        canvas.width = image.width;
-        canvas.height = image.height;
-        context.drawImage(image, 0, 0);
-        canvas_global.Jcrop({
-            onSelect: selectcanvas,
-            onRelease: clearcanvas,
-            boxWidth: crop_max_width,
-            boxHeight: crop_max_height
-        }, function() {
-            jcrop_api = this;
-        });
-        clearcanvas();
-    }
-
-    function showPreview(coords)
-    {
-        var rx = 100 / coords.w;
-        var ry = 100 / coords.h;
-
-        $('#preview').css({
-            width: Math.round(rx * 500) + 'px',
-            height: Math.round(ry * 370) + 'px',
-            marginLeft: '-' + Math.round(rx * coords.x) + 'px',
-            marginTop: '-' + Math.round(ry * coords.y) + 'px'
-        });
-    }
-
-    function clearcanvas() {
-        prefsize = {
-            x: 0,
-            y: 0,
-            w: canvas.width,
-            h: canvas.height
-        };
-    }
-
-    function selectcanvas(coords) {
-        prefsize = {
-            x: Math.round(coords.x),
-            y: Math.round(coords.y),
-            w: Math.round(coords.w),
-            h: Math.round(coords.h)
-        };
-
-        showPreview(coords);
-    }
-
-    function applyCrop() {
-        canvas.width = prefsize.w;
-        canvas.height = prefsize.h;
-        context.drawImage(image, prefsize.x, prefsize.y, prefsize.w, prefsize.h, 0, 0, canvas.width, canvas.height);
-        validateImage();
-    }
-
-    $("#cropbutton").click(function(e) {
-        applyCrop();
+    $("#upload_file_input").change(function() {
+        readURL(this);
     });
 
-    $("#form").submit(function(e) {
-        e.preventDefault();
-        formData = new FormData($(this)[0]);
-        var blob = dataURLtoBlob(canvas.toDataURL('image/png'));
-        //---Add file blob to the form data
-        formData.append("cropped_image[]", blob);
-        $.ajax({
-            url: "whatever.php",
-            type: "POST",
-            data: formData,
-            contentType: false,
-            cache: false,
-            processData: false,
-            success: function(data) {
-                alert("Success");
-            },
-            error: function(data) {
-                alert("Error");
-            },
-            complete: function(data) {}
-        });
+    $("#upload_form").submit( function(eventObj) {
+        var crop_size = cropper.getCropBoxData();
+        console.log("WAIT");
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "x")
+            .attr('value', crop_size.left)
+            .appendTo('#upload_form');
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "y")
+            .attr('value', crop_size.top)
+            .appendTo('#upload_form');
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "width")
+            .attr('value', crop_size.width)
+            .appendTo('#upload_form');
+        $('<input />').attr('type', 'hidden')
+            .attr('name', "height")
+            .attr('value', crop_size.height)
+            .appendTo('#upload_form');
+        console.log("OKAY");
+        return true;
     });
+
 
 </script>
 <!-- hider -->

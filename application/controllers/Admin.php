@@ -23,9 +23,149 @@ class Admin extends CI_Controller {
         $this->load->view('admin/index');
     }
 
+    public function login() {
+        $this->load->library('session');
+        $this->load->model('Commission_site', 'data_model');
+        $this->load->helper('form');
+
+        if ($this->input->method() == "get")
+        {
+            if ($this->session->userdata("hash") != NULL)  // if the session hash exists
+            {
+                $session_hash = $this->session->hash;
+                $hash = $this->data_model->get_admin_hash();
+
+                if (password_verify($session_hash, $hash))
+                {
+                    $this->index();
+                }
+                else
+                {
+                    $this->load->view('admin/login');
+                }
+            }
+            else
+            {
+                $this->load->view('admin/login');
+            }
+        }
+        else
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('password', 'Password', 'trim|required');
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $this->load->view('admin/login');
+            }
+            else
+            {
+                $this->load->model('Commission_site', 'data_model');
+
+                $data = $this->input->post();
+                $hash = $this->data_model->get_admin_hash();
+                if (password_verify($data["password"], $hash))
+                {
+                    $this->session->hash = $hash;
+                    $this->index();
+                }
+                else
+                {
+                    $this->load->view('admin/login');
+                }
+            }
+        }
+    }
+
+    public function session()
+    {
+        $this->load->library('session');
+        var_dump($this->session);
+    }
+
+    public function del_session()
+    {
+        $this->load->library('session');
+        session_destroy();
+        var_dump($this->session);
+    }
+
     public function upload()
     {
-        $this->load->view('admin/upload');
+        $this->load->helper('form');
+        $this->load->model('Commission_site', 'data_model');
+        $data['stats'] = $this->data_model->get_stat_names();
+
+        if ($this->input->method() == "get")
+        {
+            $this->load->view('admin/upload', $data);
+        }
+        else
+        {
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('title', 'Title', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('description', 'Description', 'htmlspecialchars|trim|required');
+            $this->form_validation->set_rules('price', 'Price', 'htmlspecialchars|trim');
+            foreach ($data['stats'] as $stat) {
+                $this->form_validation->set_rules(strtolower(str_replace(' ', '_', $stat->name)), $stat->name, 'htmlspecialchars|trim');
+            }
+
+            if ($this->form_validation->run() == FALSE)
+            {
+                $data['input'] = $this->input->post();
+                $this->load->view('admin/upload', $data);
+            }
+            else
+            {
+                var_dump($this->input->post());
+
+                $config['upload_path']          = './static/images/uploads/';
+                $config['allowed_types']        = 'gif|jpg|png';
+
+                echo $config['upload_path'];
+
+                $this->load->library('upload', $config);
+                $this->upload->initialize($config);
+
+                if ( ! $this->upload->do_upload('upload_file_input'))
+                {
+                    $error = array('error' => $this->upload->display_errors());
+                    var_dump($error);
+
+                }
+                else
+                {
+                    $data = array('upload_data' => $this->upload->data());
+                    var_dump($data);
+                }
+
+                //$this->data_model->upload_art($this->input->post());
+                //$this->load->view('art', );
+            }
+        }
+    }
+
+    public function do_upload($data)
+    {
+        $config['upload_path']          = base_url() . 'static/images/uploads/';
+        $config['allowed_types']        = 'gif|jpg|png';
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload('userfile'))
+        {
+            $error = array('error' => $this->upload->display_errors());
+
+            $this->load->view('upload_form', $error);
+        }
+        else
+        {
+            $data = array('upload_data' => $this->upload->data());
+
+            $this->load->view('upload_success', $data);
+        }
     }
 
     public function edit_art()

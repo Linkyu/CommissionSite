@@ -250,6 +250,10 @@ img {
     background-color: #ddd;
 }
 
+#canvas {
+    max-width: 100%;
+}
+
 #art_full_img {
     margin-bottom: 2em;
 }

@@ -113,6 +113,19 @@ class Commission_site extends CI_Model
         return $dict;
     }
 
+    public function get_stat_names()
+    {
+        $this->load->database();
+
+//        select name
+//        from stats
+        $this->db->select("name");
+
+        $query = $this->db->get("stats");
+
+        return $query->result();
+    }
+
     public function get_stats(int $art_id)
     {
         $this->load->database();
@@ -141,5 +154,28 @@ class Commission_site extends CI_Model
         $query = $this->db->get("has_starred");
 
         return sizeof($query->result()) == 1;
+    }
+
+    public function get_admin_hash()
+    {
+        $this->load->database();
+
+        $this->db->select("pass");
+        $this->db->where("pseudo", "Linkyu");
+        $query = $this->db->get("admins");
+
+        $result = $query->result();
+
+        return $result[0]->pass;
+    }
+
+    public function upload_art($data)
+    {
+        $this->load->database();
+
+        var_dump($data);
+
+        return "OK";
+
     }
 }
