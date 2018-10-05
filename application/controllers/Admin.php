@@ -139,10 +139,13 @@ class Admin extends CI_Controller {
                 {
                     $data = array('upload_data' => $this->upload->data());
                     var_dump($data);
-                }
 
-                //$this->data_model->upload_art($this->input->post());
-                //$this->load->view('art', );
+                    $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+                    $db_data["file_name"] = $upload_data['file_name'];
+                    $db_data["art_data"] = $this->input->post();
+                    $this->data_model->upload_art($db_data);
+                    //$this->load->view('art', );
+                }
             }
         }
     }

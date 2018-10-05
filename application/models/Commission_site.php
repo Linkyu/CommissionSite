@@ -173,9 +173,27 @@ class Commission_site extends CI_Model
     {
         $this->load->database();
 
-        var_dump($data);
+        $thumbnail_data = $this->thumbnailer($data['art_data']);
+
+        $this->db->set("title", $data['art_data']['title']);
+        $this->db->set("description", $data['art_data']['description']);
+        $this->db->set("date", date('Y/m/d:h-m-s'));
+
+        $this->db->set("filename", $data['file_name']);
+        $this->db->set("thumbnail", $thumbnail_data);
+
+        $this->db->set("star_count", 0);
+        $this->db->set("price", $data['art_data']['price']);
+        $this->db->set("is_commission", $data['art_data']['title']);
+        $this->db->set("is_nsfw", $data['art_data']['title']);
+        $this->db->insert("art");
 
         return "OK";
 
+    }
+
+    private function thumbnailer($art_data)
+    {
+        return $art_data['x'] . ',' . $art_data['y'] . ',' . $art_data['width'] . ',' . $art_data['height'];
     }
 }
