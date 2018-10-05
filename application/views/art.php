@@ -20,7 +20,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div id="body_container">
             <h1><?php echo $art->title ?><span id="title_art_id"> <?php echo $art->id ?></span></h1>
 
-            <div id="art_full_img"><img src="<?php echo base_url(); ?>static/images/PH_thumbnails/<?php echo $art->filename ?>"></div>
+            <div id="art_full_img"><img src="<?php echo base_url(); ?>static/images/uploads/<?php echo $art->filename ?>"></div>
 
             <div id="art_details_div">
                 <div id="art_description_div">

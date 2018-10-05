@@ -173,23 +173,59 @@ class Commission_site extends CI_Model
     {
         $this->load->database();
 
-        $thumbnail_data = $this->thumbnailer($data['art_data']);
-
         $this->db->set("title", $data['art_data']['title']);
         $this->db->set("description", $data['art_data']['description']);
         $this->db->set("date", date('Y/m/d:h-m-s'));
 
         $this->db->set("filename", $data['file_name']);
-        $this->db->set("thumbnail", $thumbnail_data);
+        $this->db->set("thumbnail", $this->thumbnailer($data['art_data']));
 
         $this->db->set("star_count", 0);
-        $this->db->set("price", $data['art_data']['price']);
-        $this->db->set("is_commission", $data['art_data']['title']);
-        $this->db->set("is_nsfw", $data['art_data']['title']);
+        if ($data['art_data']['price'] != '') {
+            $this->db->set("price", $data['art_data']['price']);
+        }
+        if (isset($data['art_data']['upload_commission_checkbox'])) {
+            $this->db->set("is_commission", 1);
+        }
+        $this->db->set("is_nsfw", 0);
         $this->db->insert("art");
 
-        return "OK";
+        unset($data['art_data']['title']);
+        unset($data['art_data']['description']);
+        unset($data['art_data']['price']);
+        unset($data['art_data']['x']);
+        unset($data['art_data']['y']);
+        unset($data['art_data']['width']);
+        unset($data['art_data']['height']);
+        if (isset($data['art_data']['upload_commission_checkbox'])) {
+            unset($data['art_data']['upload_commission_checkbox']);
+        }
 
+        $art_id = $this->db->insert_id();
+
+        var_dump($data['art_data']);
+
+        foreach ($data['art_data'] as $stat => $value) {
+            if ($value != '') {
+                // select id
+                // from stats
+                // where name = 'Amount of Layers'
+
+                $this->db->select("id");
+                $this->db->where("name", str_replace('_', ' ', $stat));
+                $query = $this->db->get("stats");
+
+                $result = $query->result();
+                $stat_id = $result[0];
+
+                $this->db->set("art", $art_id);
+                $this->db->set("stat", $stat_id->id);
+                $this->db->set("value", $value);
+                $this->db->insert("art_stat");
+            }
+        }
+
+        return $art_id;
     }
 
     private function thumbnailer($art_data)

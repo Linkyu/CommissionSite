@@ -105,8 +105,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         canvas_global.cropper({
             aspectRatio: 1,
             zoomable: false,
-            minCropBoxWidth: 256,
-            minCropBoxHeight: 256,
             crop: function(event) {
                 console.log(event.detail.x);
                 console.log(event.detail.y);

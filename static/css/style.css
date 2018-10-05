@@ -196,6 +196,14 @@ img {
     left: -1em;
 }
 
+/*.thumbnail_img_div {
+    position: relative;
+}*/
+
+/*.thumbnail_img_div img {
+    display:none;
+}*/
+
 #gallery_search_form {
     display: flex;
     flex-flow: row nowrap;

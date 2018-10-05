@@ -143,31 +143,12 @@ class Admin extends CI_Controller {
                     $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
                     $db_data["file_name"] = $upload_data['file_name'];
                     $db_data["art_data"] = $this->input->post();
-                    $this->data_model->upload_art($db_data);
-                    //$this->load->view('art', );
+                    $id = $this->data_model->upload_art($db_data);
+
+                    //$this->load->library('../controllers/Main');
+                    //$this->Main->art($id);
                 }
             }
-        }
-    }
-
-    public function do_upload($data)
-    {
-        $config['upload_path']          = base_url() . 'static/images/uploads/';
-        $config['allowed_types']        = 'gif|jpg|png';
-
-        $this->load->library('upload', $config);
-
-        if ( ! $this->upload->do_upload('userfile'))
-        {
-            $error = array('error' => $this->upload->display_errors());
-
-            $this->load->view('upload_form', $error);
-        }
-        else
-        {
-            $data = array('upload_data' => $this->upload->data());
-
-            $this->load->view('upload_success', $data);
         }
     }
 
