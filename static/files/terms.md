@@ -1,15 +1,41 @@
 # Commission Process
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod sem sit amet feugiat varius. Suspendisse sed tincidunt nisi. Quisque nec ligula arcu. Proin vel nisi ipsum. Sed volutpat bibendum tincidunt. Phasellus sit amet augue a ante scelerisque pellentesque a sollicitudin erat. Ut id ante nec massa venenatis tincidunt. Vivamus vel elementum enim. Aliquam et tincidunt libero. Cras dui metus, pulvinar sit amet purus eget, dapibus pulvinar dolor. Ut eu enim ac erat feugiat elementum.
+Once the payment or deposit is complete, the illustrator will start work as soon as possible. Every commission will have several steps that need to be approved by the commissioner for the work to go on:
+ - Preliminary Sketch stage, in which the commissioner will be shown the general composition of the piece.
+ - Lineart stage, which finalizes the lines of the piece. 
+ - Flats color stage, where the basic colors are filled in.
+ - Final stage, where the illustrator completes shading, lighting, and extra effects.
 
-In tortor sem, mollis ac erat vel, pretium congue neque. Mauris non ligula justo. Aenean vitae enim vel nulla interdum ornare. Praesent ut purus ut nibh tempor gravida id quis diam. Sed justo nisi, tristique eget condimentum quis, aliquet non augue. Mauris lacinia consequat nisi in eleifend. Curabitur massa dui, auctor et tristique ut, efficitur nec ipsum. Cras semper pulvinar lacus, ac lobortis odio lacinia sit amet. Cras et dui vel massa tincidunt fringilla. Aliquam consectetur pretium odio a maximus. Nam id ultricies urna, sit amet fringilla magna. Interdum et malesuada fames ac ante ipsum primis in faucibus. Sed pulvinar leo a lectus porta tincidunt. Suspendisse finibus lobortis nisl quis vulputate. In hac habitasse platea dictumst. Nullam id tempus mi.
-
-Morbi placerat convallis erat. Donec bibendum ligula ipsum, quis sodales augue vehicula at. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nam vel dictum augue, facilisis varius nulla. Quisque purus enim, aliquet et velit at, eleifend maximus lorem. Nullam iaculis nulla auctor tristique venenatis. Nulla maximus nibh eros, et cursus ex condimentum ac. Donec nunc quam, vehicula vel condimentum pretium, pretium ac magna. Vivamus non pellentesque velit, sed laoreet urna.
+Note that this is the process for a Complete illustration, and will be shorter for the other commission options.
 
 # Delivery
 
-Proin pharetra odio diam, non fermentum dui laoreet at. Suspendisse ultricies mattis neque, in sollicitudin dolor lacinia non. Donec porta libero eget lobortis ultrices. Proin vel interdum nibh. Sed varius malesuada felis. Proin commodo arcu eget suscipit mattis. Mauris sollicitudin urna lorem, id cursus ante eleifend non. Morbi cursus elit a tellus vulputate fermentum. Phasellus in mauris laoreet lacus laoreet suscipit eu nec tellus. Etiam tristique vel velit consectetur hendrerit. Fusce ut massa vulputate elit feugiat varius a at libero. Pellentesque blandit, nibh vitae faucibus tristique, tellus eros cursus felis, imperdiet rutrum eros mi a libero. Morbi finibus nunc nulla, quis tincidunt nibh ultricies sed. Morbi euismod nulla sit amet massa imperdiet, id euismod mi vehicula.
+Once the commissioner approves the Final stage, they are given the full high-resolution file and the commission process is complete. 
 
-# Disclaimers
+# Revisions
 
-Proin nec turpis congue, tincidunt magna quis, mollis ipsum. Quisque tristique vestibulum nulla. Nam in efficitur dui, at pellentesque felis. Cras sodales erat eget risus tincidunt faucibus. Vestibulum tincidunt tortor ligula, non interdum sem commodo sed. Fusce porttitor interdum odio, eu tristique turpis efficitur id. Duis ultrices erat erat, eu bibendum nisl egestas et. Sed eget ipsum accumsan, tincidunt urna ac, aliquam sapien. Ut ut congue lectus. Donec dictum magna ornare magna malesuada, pellentesque tristique dolor blandit. Duis aliquet nibh euismod nibh fermentum laoreet. Integer sit amet ligula mattis lorem fringilla suscipit et id lacus. Nam vulputate, quam sed aliquet lobortis, diam nisl dapibus turpis, vitae mattis lorem leo vel arcu. Nulla commodo dolor quis vestibulum vulputate.
+Throughout the commission, the commissioner can ask for some tweaks to the picture. However, it must be noted that as the commission progresses, accepted changes will be required to be within the current stage. Requesting revisions outside of the current stage, if it can be done, will warrant for an extra charge.
+For example: if the piece is in the Flats stage but the commissioner decided they wanted to change the overall pose of the character. Please be mindful when looking at works in progress and don't be afraid to let the illustrator know if something needs changes.
+
+
+# Rights
+
+The completed illustration's rights are held solely by the commissioner and the illustrator. The commissioner has full rights to the illustration for all personal uses and may not be resold or repurposed by anyone. The illustrator has full rights to display the illustration for any uses, including portfolios and promotional purposes.
+Commercial rights have to be negotiated beforehand if necessary.
+
+# Payment
+
+All prices are in USD. Payments will be invoiced and paid via PayPal. The commissioner will have the option to either pay all up-front or pay half now, pay half later. Invoices have a default deadline of 10 days, but the commissioner may request for an extension if necessary.
+
+# Refunds
+
+The latest you can request for a full refund is during the Preliminary Sketch stage. Any refunds requested in the Lineart stage or later will only give a percentage of money back depending on how late in the process the commission is.
+
+# Reservations
+
+While the illustrator is open-minded to all commission ideas, there are some they will NOT do. The illustrator has full right to deny the commission, but as a general rule, the following subjects will be outright denied with no negotation:
+
+ - Extreme gore
+ - Illegal content
+ - Hate propaganda
+ - Shocking material
