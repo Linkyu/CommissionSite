@@ -16,7 +16,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </header>
 <div id="container">
     <div id="body">
-        <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png"></div>
+        <div id="avatar_div"><img src="<?php echo base_url(); ?>static/images/feryuu.png" alt="avatar"></div>
 
         <div id="body_container">
             <div id="error_div">
@@ -52,16 +52,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <label id="upload_price_block">Price
                             <input type="text" name="price">
                         </label>
-                    </div>
-                    <div>
                         <label>Thumbnail</label>
                         <div id="view">
                             <img id="canvas" src="#" alt="preview" />
                         </div>
-                        <div id="preview"></div>
-                    </div>
+                        <div id="preview-div">
+							<img id="preview" src="#" alt="preview crop" width="256" height="256" />
+                    	</div>
+
+						<input type="submit" value="Upload">
+					</div>
                 </div>
-                <input type="submit" value="Upload">
             <?php echo form_close(); ?>
         </div>
 
@@ -81,15 +82,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 <!-- Jcrop and image previewer for making the thumbnail -->
 <script type="text/javascript">
-    var cropper;
-    var canvas_global = $('#canvas');
+	let cropper;
+	let canvas_global = $('#canvas');
 
-    function readURL(input) {
+	function readURL(input) {
 
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
+			let reader = new FileReader();
 
-            reader.onload = function(e) {
+			reader.onload = function(e) {
                 canvas_global.attr('src', e.target.result);
                 startCropper();
             };
@@ -104,6 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
         canvas_global.cropper({
             aspectRatio: 1,
+			preview: '#preview',
             zoomable: false,
             crop: function(event) {
                 console.log(event.detail.x);
@@ -124,9 +126,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         readURL(this);
     });
 
-    $("#upload_form").submit( function(eventObj) {
-        var crop_size = cropper.getCropBoxData();
-        console.log("WAIT");
+    $("#upload_form").submit( function() {
+		let crop_size = cropper.getCropBoxData();
+		console.log("WAIT");
         $('<input />').attr('type', 'hidden')
             .attr('name', "x")
             .attr('value', crop_size.left)

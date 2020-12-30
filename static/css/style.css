@@ -1,11 +1,11 @@
 header {
     background-color: #08669A;
     max-height: 350px;
-    padding-top: 80px;
-    padding-bottom: 20px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
-header:after {
+/*header:after {
     content: "";
     position: absolute;
     left: 0;
@@ -15,7 +15,7 @@ header:after {
     border-top: 100px solid #08669A;
     border-left: calc(100vw) solid transparent;
     border-right: 0 solid transparent;
-}
+}*/
 
 header h1 {
     text-align: center;
@@ -379,6 +379,16 @@ img {
     flex-grow: 1;
     width: 100%;
     min-height: 2em;
+}
+
+#upload_form div img {
+	max-width: 100%;
+}
+
+#upload_form #preview-div {
+	width: 256px;
+	height: 256px;
+	overflow: hidden;
 }
 
 #error_div p {

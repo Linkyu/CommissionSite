@@ -23,7 +23,7 @@ class Commission_site extends CI_Model
     {
         $this->load->database();
 
-        $this->db->order_by("date", 'DESC');
+        $this->db->order_by("id", 'DESC');
         $this->db->limit($limit, $offset);
 
         if ($search_query != null) {

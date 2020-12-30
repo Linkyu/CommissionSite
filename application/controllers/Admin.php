@@ -119,7 +119,8 @@ class Admin extends CI_Controller {
             }
             else
             {
-                var_dump($this->input->post());
+            	$form_data = $this->input->post();
+                //var_dump($this->input->post());
 
                 $config['upload_path']          = './static/images/uploads/';
                 $config['allowed_types']        = 'gif|jpg|png';
@@ -138,15 +139,33 @@ class Admin extends CI_Controller {
                 else
                 {
                     $data = array('upload_data' => $this->upload->data());
-                    var_dump($data);
+                    //var_dump($data);
 
                     $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
                     $db_data["file_name"] = $upload_data['file_name'];
                     $db_data["art_data"] = $this->input->post();
                     $id = $this->data_model->upload_art($db_data);
 
-                    //$this->load->library('../controllers/Main');
-                    //$this->Main->art($id);
+					// create thumbnail
+					$src = imagecreatefrompng($config['upload_path'] . $upload_data['file_name']);
+					$dest = imagecreatetruecolor($form_data['width'], $form_data['height']);
+
+					imagecopy($dest, $src, 0, 0, $form_data['x'], $form_data['y'], $form_data['width'], $form_data['height']);
+					imagepng($dest, $config['upload_path'] . 'thumbnails/' . $upload_data['file_name']);
+
+					imagedestroy($src);
+					imagedestroy($dest);
+
+					// Duplicated from Main. Should probably be separated?
+					$this->load->model('Commission_site', 'data_model');
+					$query = $this->data_model->get_art($id);
+					$data['art'] = reset($query);
+
+					$data['stats'] = $this->data_model->get_stats($id);
+
+					$data['ip'] = $this->input->ip_address();
+
+					$this->load->view('art', $data);
                 }
             }
         }
