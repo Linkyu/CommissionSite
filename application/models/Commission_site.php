@@ -203,7 +203,7 @@ class Commission_site extends CI_Model
 
         $art_id = $this->db->insert_id();
 
-        var_dump($data['art_data']);
+        //var_dump($data['art_data']);
 
         foreach ($data['art_data'] as $stat => $value) {
             if ($value != '') {

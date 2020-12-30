@@ -26,7 +26,7 @@ header h1 {
 }
 
 body {
-    background-color: #cacaca;
+    background-color: #171717;
     margin: 0;
 }
 
@@ -47,7 +47,7 @@ img {
     min-width: 350px;
     max-width: 950px;
     margin-left: auto;
-    padding: 3em 1em 1em;
+    padding: 1em;
 }
 
 #body_container {
@@ -64,7 +64,7 @@ img {
 }
 
 #introduction {
-    padding: 3em;
+    padding: 1em 3em 1em 3em;
     font-size: large;
 }
 
@@ -72,7 +72,7 @@ img {
     display: inline-block;
     width: 15%;
     padding: 5px;
-    background-color: #DEC026;
+    background-color: #eab009;
     margin-left: -16%;
     float: left;
 }
@@ -146,12 +146,14 @@ img {
     align-content: space-between;
 }
 
-.mini_gallery div, .gallery div {
+/*.mini_gallery div, .gallery div {
     flex-shrink: 1;
-}
+}*/
 
 .mini_gallery div img, .gallery div img {
     border: #00bcd4 2px solid;
+	max-width: 100%;
+	height: auto;
 }
 
 #featured_section div img {
@@ -159,10 +161,11 @@ img {
 }
 
 .thumbnail {
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: flex-start;
-    align-content: space-between;
+    flex: 1;
+	min-width: 150px;
+	min-height: 150px;
+	padding: 1em;
+	display: flex;
 }
 
 .thumbnail a {

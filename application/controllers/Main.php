@@ -34,7 +34,7 @@ class Main extends CI_Controller {
         $this->load->library('form_validation');
 
         $this->load->model('Commission_site', 'data_model');
-        $thumbnails_per_page = 9;
+        $thumbnails_per_page = 10;
 
         // Get the thumbnails
         if($page > 0) {
