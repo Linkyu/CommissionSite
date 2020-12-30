@@ -53,11 +53,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <input type="text" name="price">
                         </label>
                         <label>Thumbnail</label>
-                        <div id="view">
+                        <div id="view" class="cropper-container">
                             <img id="canvas" src="#" alt="preview" />
                         </div>
                         <div id="preview-div">
-							<img id="preview" src="#" alt="preview crop" width="256" height="256" />
+							<img id="preview" src="#" alt=" " width="256" height="256" />
                     	</div>
 
 						<input type="submit" value="Upload">
@@ -108,13 +108,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			preview: '#preview',
             zoomable: false,
             crop: function(event) {
-                console.log(event.detail.x);
-                console.log(event.detail.y);
-                console.log(event.detail.width);
-                console.log(event.detail.height);
-                console.log(event.detail.rotate);
-                console.log(event.detail.scaleX);
-                console.log(event.detail.scaleY);
+                /*console.log("x = " + event.detail.x);
+                console.log("y = " + event.detail.y);
+                console.log("w = " + event.detail.width);
+                console.log("h = " + event.detail.height);*/
             }
         });
 
@@ -127,15 +124,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     });
 
     $("#upload_form").submit( function() {
-		let crop_size = cropper.getCropBoxData();
+		let crop_size = cropper.getData();
 		console.log("WAIT");
         $('<input />').attr('type', 'hidden')
             .attr('name', "x")
-            .attr('value', crop_size.left)
+            .attr('value', crop_size.x)
             .appendTo('#upload_form');
         $('<input />').attr('type', 'hidden')
             .attr('name', "y")
-            .attr('value', crop_size.top)
+            .attr('value', crop_size.y)
             .appendTo('#upload_form');
         $('<input />').attr('type', 'hidden')
             .attr('name', "width")
@@ -145,7 +142,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             .attr('name', "height")
             .attr('value', crop_size.height)
             .appendTo('#upload_form');
-        console.log("OKAY");
+        console.log("OKAY")
+
         return true;
     });
 
